@@ -35,7 +35,7 @@ def broadcast_file_info(message):
 @socketio.on('broadcast current song', namespace='/test')
 def broadcast_current_song(message):
     response_data = {'current_song': parse_current_song()}
-    emit('my response', response_data, broadcast=True)
+    emit('current song response', response_data)
 
 
 @app.route('/upload', methods=['GET', 'POST'])

@@ -31,7 +31,7 @@
         </jingles>
         <media>
             <bitrate>96</bitrate>
-            <source>/home/vagrant/musicbox/musicbox/static/music/</source>
+            <source>/home/vagrant/musicbox/musicbox/static/music/one</source>
             <format>mp3</format>
             <ogg_quality>4</ogg_quality>
             <samplerate>48000</samplerate>

@@ -7,6 +7,9 @@ $(document).ready(function(){
 
     socket.on('my response', function(msg) {
         $('#log').append('<br>Received #' + msg.count + ': ' + msg.data);
+    });
+
+    socket.on('current song response', function(msg) {
         $('#current_song').append('<h1>Current played song: ' + msg.current_song + '</h1>');
     });
 
