@@ -5,6 +5,7 @@ except Exception:
 
 
 DEBUG = True
-UPLOAD_FOLDER = '/home/vagrant/musicbox/musicbox/static/music'
+UPLOAD_FOLDER = '/home/vagrant/musicbox/musicbox/static/music/'
 ALLOWED_EXTENSIONS = set(['mp3'])
 SECRET_KEY = 'secret!'
+CURRENT_MUSIC_PLAYED = 'stream_mp3_current.xml'
