@@ -5,8 +5,8 @@ except Exception:
 
 
 DEBUG = True
-UPLOAD_FOLDER = '/home/vagrant/musicbox/musicbox/static/music/one'
-STATIC_FOLTER = '/home/vagrant/musicbox/musicbox/static/music/'
+MUSIC_FOLDER = '/home/vagrant/musicbox/musicbox/static/music/'
+UPLOAD_FOLDER = ''.join([MUSIC_FOLDER, 'one'])
 ALLOWED_EXTENSIONS = set(['mp3'])
 SECRET_KEY = 'secret!'
 CURRENT_MUSIC_PLAYED = 'stream_mp3_current.xml'

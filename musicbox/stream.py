@@ -12,7 +12,7 @@ def parse_current_song():
     * NOTE:: generating json in deefuzzer is not working correctly (that's why
              xml parse)
     """
-    xml = open(''.join([settings.STATIC_FOLTER,
+    xml = open(''.join([settings.MUSIC_FOLDER,
                         settings.CURRENT_MUSIC_PLAYED])).read()
     parsed_xml = xmltodict.parse(xml)
     try:

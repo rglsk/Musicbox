@@ -6,17 +6,18 @@ $(document).ready(function(){
     });
 
     socket.on('my response', function(msg) {
-        $('#log').append('<br>Received #' + msg.count + ': ' + msg.data);
+        alert("Added new song to playlist: " + msg.data.split("\\")[2]);
+        // $('#log').append('<br>Received #' + msg.count + ': ' + msg.data);
     });
 
     socket.on('current song response', function(msg) {
-        $('#current_song').append('<h1>Current played song: ' + msg.current_song + '</h1>');
+        $('#current_song').html('<h1>Current played song: ' + msg.current_song + '</h1>');
     });
 
-    $(document).ready(function() {
-        socket.emit('broadcast current song', {});
-        return false;
-    });
+    // $(document).ready(function() {
+    //     socket.emit('broadcast current song', {});
+    //     return false;
+    // });
 
     $('form#upload_data').submit(function(event) {
         socket.emit('my broadcast event', {data: $('#upload_name').val()});
