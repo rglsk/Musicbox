@@ -1,0 +1,8 @@
+*.mp3
+*.pyc
+*.egg
+*.egg-info
+.eggs
+.log
+.vagrant
+local_settings.py
