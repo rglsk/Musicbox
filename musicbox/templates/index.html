@@ -5,6 +5,9 @@
     <script type="text/javascript" src="static/js/socketio.js"></script>
 </head>
 <body>
+	<div id='current_song'></div>  <!--#TODO refresh when it's changing -->
+
+	<audio controls="" autoplay="" name="media"><source src="http://127.0.0.1:8000/stream.mp3" type="audio/mpeg"></audio>
     <h2>Receive:</h2>
     <div id="log"></div>
     {% include 'file_upload.html' %}

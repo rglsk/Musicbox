@@ -7,6 +7,12 @@ $(document).ready(function(){
 
     socket.on('my response', function(msg) {
         $('#log').append('<br>Received #' + msg.count + ': ' + msg.data);
+        $('#current_song').append('<h1>Current played song: ' + msg.current_song + '</h1>');
+    });
+
+    $(document).ready(function() {
+        socket.emit('broadcast current song', {});
+        return false;
     });
 
     $('form#upload_data').submit(function(event) {
@@ -14,4 +20,5 @@ $(document).ready(function(){
         document.getElementById("upload_data").submit();
         return false;
     });
+
 });

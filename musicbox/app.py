@@ -8,8 +8,9 @@ from flask import session
 from flask.ext.socketio import SocketIO
 from flask.ext.socketio import emit
 
-import settings
-import utils
+from musicbox import settings
+from musicbox import utils
+from musicbox.stream import parse_current_song
 
 
 app = Flask(__name__)
@@ -26,9 +27,15 @@ def index():
 @socketio.on('my broadcast event', namespace='/test')
 def broadcast_file_info(message):
     session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my response',
-         {'data': message['data'], 'count': session['receive_count']},
-         broadcast=True)
+    response_data = {'data': message['data'],
+                     'count': session['receive_count']}
+    emit('my response', response_data, broadcast=True)
+
+
+@socketio.on('broadcast current song', namespace='/test')
+def broadcast_current_song(message):
+    response_data = {'current_song': parse_current_song()}
+    emit('my response', response_data, broadcast=True)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -39,6 +46,7 @@ def upload_file():
             filename = secure_filename(_file.filename)
             _file.save(os.path.join(settings.UPLOAD_FOLDER, filename))
     return redirect('/stream')
+
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0')
