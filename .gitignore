@@ -6,3 +6,5 @@
 .log
 .vagrant
 local_settings.py
+stream_mp3_current.xml
+stream_mp3_playlist.xml
