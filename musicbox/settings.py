@@ -5,5 +5,6 @@ except Exception:
 
 
 DEBUG = True
-
+UPLOAD_FOLDER = '/home/vagrant/musicbox/musicbox/static/music'
+ALLOWED_EXTENSIONS = set(['mp3'])
 SECRET_KEY = 'secret!'
