@@ -11,11 +11,3 @@ sudo mkdir /data/db/
 sudo pip install -e ./musicbox/
 sudo pip install deefuzzer
 sudo sed -i -e 's/ssl_version=PROTOCOL_SSLv3/ssl_version=PROTOCOL_SSLv23/g' /usr/local/lib/python2.7/dist-packages/gevent/ssl.py
-
-# sudo apt-get install -n icecast2
-# sudo sed -i -e 's/ENABLE=false/ENABLE=true/g' /etc/default/icecast2
-# sudo /etc/init.d/icecast2 restart
-
-
-# sudo mongod &
-# deefuzzer /home/vagrant/musicbox/deefuzzer.xml &

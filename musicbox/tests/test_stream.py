@@ -30,7 +30,7 @@ class TestStream(unittest.TestCase):
         mock_read.read.return_value = incorrect_example_xml
         mock_open.return_value = mock_read
 
-        with self.assertRaises(errors.NotPlayedSong):
+        with self.assertRaises(errors.IncorrectXmlError):
             parse_current_song()
 
     @mock.patch('__builtin__.open')
@@ -42,5 +42,5 @@ class TestStream(unittest.TestCase):
         mock_read.read.return_value = incorrect_example_xml
         mock_open.return_value = mock_read
 
-        with self.assertRaises(errors.NotPlayedSong):
+        with self.assertRaises(errors.IncorrectXmlError):
             parse_current_song()

@@ -49,6 +49,12 @@ Run db and stream:
 musicbox/scripts/setup_tools.sh
 ```
 
+Before you run application, run tests:
+
+```
+nosetests
+```
+
 Run musicbox application:
 
 ```
@@ -56,14 +62,15 @@ cd musicbox/
 python app.py
 ```
 
-Application is avaible under:
+Application is available under:
 
 ```
 127.0.0.1:5000
 ```
 
-Stream is avaible under:
+Stream is available under:
 
 ```
 127.0.0.1:8000/stream.mp3
 ```
+
