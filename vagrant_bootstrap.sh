@@ -5,8 +5,10 @@ sudo apt-get install -y python-pip python-dev python-liblo python-mutagen python
 sudo pip install -U distribute setuptools
 sudo apt-get install -y git
 sudo apt-get install -y mongodb
+
 sudo mkdir /data/
 sudo mkdir /data/db/
+sudo mongod &
 
 sudo pip install -e ./musicbox/
 sudo pip install deefuzzer
