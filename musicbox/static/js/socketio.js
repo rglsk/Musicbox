@@ -10,11 +10,15 @@ $(document).ready(function(){
     });
 
     socket.on('current song response', function(msg) {
-        console.log('jestem');
         $('#current_song').html('<center><h1>' + msg.current_song + '</h1></center>');
         var list = "";
         for(i=0; i<msg.song_list.length; i++){
-            list +="<a href='#' class='list-group-item'><i class='glyphicon glyphicon-music'></i>  " + i+ ": " + msg.song_list[i]+"</li></a>";
+            var diss = "";
+            if (msg.song_list[i] == msg.current_song.substring(0, 26)){
+                diss = "disabled"
+            };
+            list +="<a href='#' class='list-group-item " + diss + "'><i class='glyphicon glyphicon-music'></i>  " + i+ ": " + msg.song_list[i]+"</li></a>";
+            diss = "";
         }
         $(".list-group").html(list);
     });

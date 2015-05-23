@@ -2,7 +2,7 @@ import logging
 
 
 class BaseException(Exception):
-    """ Base exception class. """
+    """Base exception class."""
 
     def __init__(self, message=None):
         self.message = message
@@ -10,5 +10,5 @@ class BaseException(Exception):
         super(BaseException, self).__init__(self.message)
 
 
-class NotPlayedSong(BaseException):
-    """Exception error class for non-played song"""
+class IncorrectXmlError(BaseException):
+    """Error raised when xml is not correct."""

@@ -5,6 +5,7 @@ from musicbox.app import app
 
 
 class BaseApiTest(unittest.TestCase):
+    """Base api test case."""
 
     def setUp(self):
         app.config['TESTING'] = True

@@ -29,43 +29,47 @@ _db = db.SongStorage()
 
 
 def background_thread():
-    song_title = ''
+    """Backgroud thread to emit current song and playlist"""
+    title = ''
     while True:
         try:
-            parsed_xml = parse_current_song()
-        except errors.NotPlayedSong:
+            title = parse_current_song()
+        except errors.UncorrectXmlError:
             # This occurs when stream change song and xml is not parsable
-            parsed_xml = ''
-        if song_title == parsed_xml:
-            continue
-        song_title = parsed_xml
+            title = ''
         song_list = _db.get_all_titles()
         socketio.emit('current song response',
-                      {'current_song': song_title, 'song_list': song_list},
+                      {'current_song': title, 'song_list': song_list},
                       namespace='/test')
         time.sleep(2)
 
 
 @app.route('/')
 def index():
+    """Main view which run worker (thread) and render template."""
     global thread
     if thread is None:
         thread = Thread(target=background_thread)
         thread.start()
-    song_list = _db.get_all_titles()
-    return render_template('index.html', **{'song_list': song_list})
+    return render_template('index.html')
 
 
 @socketio.on('my broadcast event', namespace='/test')
 def broadcast_file_info(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    response_data = {'data': message['data'],
-                     'count': session['receive_count']}
+    """Broadcast socketio emits uploaded file information.
+
+    :param message: Information message. (Dictionary)
+    """
+    response_data = {'data': message['data']}
     emit('my response', response_data, broadcast=True)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    """Upload audio files.
+
+    *NOTE:: Upload files only with extension specified in ALLOWED_EXTENSIONS.
+    """
     if request.method == 'POST':
         _file = request.files['file']
         if _file and utils.allowed_file(_file.filename):

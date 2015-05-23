@@ -19,6 +19,7 @@ def parse_current_song():
         parsed_xml = xmltodict.parse(xml)
         return parsed_xml['rss']['channel']['item']['title']
     except KeyError:
-        raise errors.NotPlayedSong('Radio is not playing now.')
+        raise errors.IncorrectXmlError('Radio is not playing now.')
     except ExpatError:
-        raise errors.NotPlayedSong('Radio is not playing now.')
+        raise errors.IncorrectXmlError(
+            '{} file is incorrect'.format(settings.CURRENT_MUSIC_PLAYED))
