@@ -1,17 +1,19 @@
 import os
 from werkzeug import secure_filename
-from gevent import monkey
-monkey.patch_all()
-import time
 
-from threading import Thread
 from flask import Flask
 from flask import render_template
-from flask import request, Response
+from flask import request
+from flask import redirect
 from flask import session
 from flask.ext.socketio import SocketIO
 from flask.ext.socketio import emit
+from gevent import monkey
+monkey.patch_all()
+import time
+from threading import Thread
 
+from musicbox.db import db
 from musicbox import settings
 from musicbox import utils
 from musicbox.stream import parse_current_song
@@ -53,17 +55,6 @@ def broadcast_file_info(message):
     emit('my response', response_data, broadcast=True)
 
 
-# @socketio.on('broadcast current song', namespace='/test')
-# def broadcast_current_song(message):
-#     song_title = ''
-    # while True:
-    #     if song_title == parse_current_song():
-    #         continue
-    #     song_title = parse_current_song()
-    #     emit('current song response', {'current_song': song_title})
-    #     gevent.sleep(2)
-
-
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -71,7 +62,9 @@ def upload_file():
         if _file and utils.allowed_file(_file.filename):
             filename = secure_filename(_file.filename)
             _file.save(os.path.join(settings.UPLOAD_FOLDER, filename))
-    return Response()
+            _db = db.SongStorage()
+            _db.create(title=filename)
+    return redirect('/')
 
 
 if __name__ == '__main__':
