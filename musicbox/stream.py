@@ -1,4 +1,5 @@
 import xmltodict
+from xml.parsers.expat import ExpatError
 
 from musicbox import settings
 from musicbox import errors
@@ -14,8 +15,10 @@ def parse_current_song():
     """
     xml = open(''.join([settings.MUSIC_FOLDER,
                         settings.CURRENT_MUSIC_PLAYED])).read()
-    parsed_xml = xmltodict.parse(xml)
     try:
+        parsed_xml = xmltodict.parse(xml)
         return parsed_xml['rss']['channel']['item']['title']
     except KeyError:
-        raise errors.NotPlayedSong('Radio is no playing now.')
+        raise errors.NotPlayedSong('Radio is not playing now.')
+    except ExpatError:
+        raise errors.NotPlayedSong('Radio is not playing now.')

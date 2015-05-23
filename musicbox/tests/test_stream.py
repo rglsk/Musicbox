@@ -22,9 +22,21 @@ class TestStream(unittest.TestCase):
         self.assertEqual(response, title)
 
     @mock.patch('__builtin__.open')
-    def test_parse_current_song_error(self, mock_open):
+    def test_parse_current_song_key_error(self, mock_open):
         title = 'ptaki.lataja.kluczem.mp3'
         incorrect_example_xml = '<title>{}</title>'.format(title)
+
+        mock_read = mock.Mock()
+        mock_read.read.return_value = incorrect_example_xml
+        mock_open.return_value = mock_read
+
+        with self.assertRaises(errors.NotPlayedSong):
+            parse_current_song()
+
+    @mock.patch('__builtin__.open')
+    def test_parse_current_song_parse_error(self, mock_open):
+        title = 'ptaki.lataja.kluczem.mp3'
+        incorrect_example_xml = ''.format(title)
 
         mock_read = mock.Mock()
         mock_read.read.return_value = incorrect_example_xml

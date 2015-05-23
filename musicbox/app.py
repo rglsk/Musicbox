@@ -14,6 +14,7 @@ import time
 from threading import Thread
 
 from musicbox.db import db
+from musicbox import errors
 from musicbox import settings
 from musicbox import utils
 from musicbox.stream import parse_current_song
@@ -24,18 +25,25 @@ app.config.from_object(os.environ.get('MUSICBOX_CONFIG_MODULE',
                                       'musicbox.settings'))
 socketio = SocketIO(app)
 thread = None
+_db = db.SongStorage()
 
 
 def background_thread():
     song_title = ''
     while True:
-        parsed_xml = parse_current_song()
+        try:
+            parsed_xml = parse_current_song()
+        except errors.NotPlayedSong:
+            # This occurs when stream change the song and xml is not parsable
+            parsed_xml = ''
         if song_title == parsed_xml:
             continue
         song_title = parsed_xml
-        socketio.emit('current song response', {'current_song': song_title},
+        song_list = _db.get_all_titles()
+        socketio.emit('current song response',
+                      {'current_song': song_title, 'song_list': song_list},
                       namespace='/test')
-        time.sleep(4)
+        time.sleep(2)
 
 
 @app.route('/')
@@ -44,7 +52,8 @@ def index():
     if thread is None:
         thread = Thread(target=background_thread)
         thread.start()
-    return render_template('index.html')
+    song_list = _db.get_all_titles()
+    return render_template('index.html', **{'song_list': song_list})
 
 
 @socketio.on('my broadcast event', namespace='/test')
@@ -62,7 +71,6 @@ def upload_file():
         if _file and utils.allowed_file(_file.filename):
             filename = secure_filename(_file.filename)
             _file.save(os.path.join(settings.UPLOAD_FOLDER, filename))
-            _db = db.SongStorage()
             _db.create(title=filename)
     return redirect('/')
 
