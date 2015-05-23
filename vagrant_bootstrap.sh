@@ -13,3 +13,7 @@ sudo mongod &
 sudo pip install -e ./musicbox/
 sudo pip install deefuzzer
 sudo sed -i -e 's/ssl_version=PROTOCOL_SSLv3/ssl_version=PROTOCOL_SSLv23/g' /usr/local/lib/python2.7/dist-packages/gevent/ssl.py
+
+wget -P /home/vagrant/musicbox/musicbox/static/ http://getbootstrap.com/2.3.2/assets/bootstrap.zip
+unzip -x /home/vagrant/musicbox/musicbox/static/bootstrap.zip
+rm /home/vagrant/musicbox/musicbox/static/bootstrap.zip

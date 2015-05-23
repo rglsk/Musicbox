@@ -43,12 +43,6 @@ Example:
 sed -i -e 's/hackme/my_new_pass/g' /home/vagrant/musicbox/deefuzzer.xml
 ```
 
-Run db and stream:
-
-```
-musicbox/scripts/setup_tools.sh
-```
-
 Before you run application, run tests:
 
 ```
@@ -62,7 +56,7 @@ cd musicbox/
 python app.py
 ```
 
-Application is available under:
+Application is available under (I'm sure that app works on chrome):
 
 ```
 127.0.0.1:5000
