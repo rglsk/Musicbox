@@ -7,17 +7,17 @@ $(document).ready(function(){
 
     socket.on('my response', function(msg) {
         alert("Added new song to playlist: " + msg.data.split("\\")[2]);
-        // $('#log').append('<br>Received #' + msg.count + ': ' + msg.data);
     });
 
     socket.on('current song response', function(msg) {
-        $('#current_song').html('<h1>Current played song: ' + msg.current_song + '</h1>');
+        console.log('jestem');
+        $('#current_song').html('<center><h1>' + msg.current_song + '</h1></center>');
+        var list = "";
+        for(i=0; i<msg.song_list.length; i++){
+            list +="<a href='#' class='list-group-item'><i class='glyphicon glyphicon-music'></i>  " + i+ ": " + msg.song_list[i]+"</li></a>";
+        }
+        $(".list-group").html(list);
     });
-
-    // $(document).ready(function() {
-    //     socket.emit('broadcast current song', {});
-    //     return false;
-    // });
 
     $('form#upload_data').submit(function(event) {
         socket.emit('my broadcast event', {data: $('#upload_name').val()});

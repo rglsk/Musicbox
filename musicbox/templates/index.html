@@ -1,14 +1,20 @@
-<html>
-<head>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/js/socketio.js"></script>
-</head>
-<body>
-	<div id='current_song'></div>  <!--#TODO refresh when it's changing -->
+{% extends "base.html" %}
+{% block hero_header %}
+	<div id='current_song'><center><h1>Musicbox</h1></center></div>  <!--#TODO refresh when it's changing -->
+{% endblock %}
 
-	<audio controls="" autoplay="" name="media"><source src="http://127.0.0.1:8000/stream.mp3" type="audio/mpeg"></audio>
-    <div id="log"></div>
-    {% include 'file_upload.html' %}
+{% block song_list %}
+<ul class="list-group">
+
+</ul>
+{% endblock %}	
+{% block file_upload %}
+	{% include "file_upload.html" %}
+{% endblock %}
+
+{% block music_player %}
+	<center><audio controls="" autoplay="" name="media"><source src="http://127.0.0.1:8000/stream.mp3" type="audio/mpeg"></audio></center>
+{% endblock %}
+
 </body>
 </html>

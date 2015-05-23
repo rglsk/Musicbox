@@ -34,7 +34,7 @@ def background_thread():
         try:
             parsed_xml = parse_current_song()
         except errors.NotPlayedSong:
-            # This occurs when stream change the song and xml is not parsable
+            # This occurs when stream change song and xml is not parsable
             parsed_xml = ''
         if song_title == parsed_xml:
             continue

@@ -3,7 +3,7 @@ import datetime
 from pymongo import MongoClient
 from pymongo import ASCENDING
 
-import settings
+from musicbox.settings import SONG_CHAR_LIMIT
 from musicbox.utils import to_timestamp
 
 
@@ -15,7 +15,6 @@ class SongStorage(object):
     def __init__(self, host='localhost', port=27017):
         _client = MongoClient(host, port)
         self.db = _client[self.db_name]
-        self.db.authenticate(settings.DB_USER, settings.DB_PASSWORD)
 
     def create(self, title=None):
         """Creates song object.
@@ -30,5 +29,10 @@ class SongStorage(object):
                  'title': title}).inserted_id
         return None
 
-    def get_all(self, direction=ASCENDING):
-        return self.db[self.collecton_name].find().sort('timestamp', direction)
+    def get_all(self, limit, direction=ASCENDING):
+        return self.db[self.collecton_name].find().limit(limit).sort(
+            'timestamp', direction)
+
+    def get_all_titles(self, limit=6):
+        all_songs = self.get_all(limit)
+        return [song['title'][:SONG_CHAR_LIMIT] for song in all_songs]
