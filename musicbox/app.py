@@ -1,22 +1,21 @@
 import os
 from werkzeug import secure_filename
-
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import redirect
-from flask import session
-from flask.ext.socketio import SocketIO
-from flask.ext.socketio import emit
 from gevent import monkey
-monkey.patch_all()
+monkey.patch_all()  # nopep8
 import time
 from threading import Thread
 
-from musicbox.db import db
+from flask import Flask
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask.ext.socketio import SocketIO
+from flask.ext.socketio import emit
+
 from musicbox import errors
 from musicbox import settings
 from musicbox import utils
+from musicbox.db import db
 from musicbox.stream import parse_current_song
 
 
@@ -34,14 +33,14 @@ def background_thread():
     while True:
         try:
             title = parse_current_song()
-        except errors.UncorrectXmlError:
+        except errors.IncorrectXmlError:
             # This occurs when stream change song and xml is not parsable
             title = ''
         song_list = _db.get_all_titles()
+        time.sleep(2)
         socketio.emit('current song response',
                       {'current_song': title, 'song_list': song_list},
                       namespace='/test')
-        time.sleep(2)
 
 
 @app.route('/')
